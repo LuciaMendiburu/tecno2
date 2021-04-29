@@ -25,6 +25,8 @@ void setup() {
 
     String nombre= nf(i, 2)+ ".png";
     Pinceladas[i] = loadImage(nombre);
+    //tambien se podria hacer una imagen con todas las obras juntas para sacar la paleta de ahi, pero remplazaría a la logia del aleatorio
+    //chequear si sacar las que estan texturizadas
   }
 
   background(paleta.darUnColorFondo() );
