@@ -1,11 +1,20 @@
 /* Artista: Eduardo Vega de Seoane
-Tecnología Multimedial 2 - Comisión Lisandro
-Integrantes: Jaurena, Mendiburu, Parisi
-*/
+ Tecnología Multimedial 2 - Comisión Lisandro
+ Integrantes: Jaurena, Mendiburu, Parisi
+ */
 
 //PALETA DE COLORES:
 
 Paleta paleta;
+
+//lineas
+PGraphics capa1;
+PGraphics capa2;
+
+//formas
+PGraphics capa3;
+PGraphics capa4;
+
 //PosLienzo posLienzo;
 PImage Pinceladas[];
 int cantidad = 32;
@@ -37,6 +46,10 @@ GestorSenial gestorPitch;
 
 void setup() {
   size(1200, 600);
+  capa1 = createGraphics(1200, 600);
+  capa2 = createGraphics(1200, 600);
+  capa3 = createGraphics(1200, 600);
+  capa4 = createGraphics(1200, 600);
   imageMode( CENTER  );
 
   osc = new OscP5(this, 12345); // parametros: puntero a processing y puerto
@@ -64,46 +77,35 @@ void setup() {
 }
 void draw() {
 
-  int cual = int(random(cantidad));
-  //float posX = random( 50, width - 50 );
-  //float posY= random( 50, height - 50 );
 
+
+
+  capa1.beginDraw();
+
+  int cual = int(random(cantidad));
   float posX = random(  width  );
   float posY= random( height );
 
   tint( paleta.darUnColor() );
+
+
   pushMatrix();
+
   translate (posX, posY);
 
   //ESCALA USANDO EL MOUSE:
   scale(map(mouseY, 0, height, 0.15, 0.35));
 
-  /* ESCALA USANDO SONIDO:   
-   scale(random(0.1, gestorAmp.filtradoNorm())/1.5);
-   */
-
   //VELOCIDAD USANDO EL MOUSE:
-  if (frameCount%int(map(mouseX, 0, width, 40, 2))==0) {
+  if (frameCount%int(map(mouseX, 0, width, 40, 2))==0 cantidad%2 == 0 ) {
     image(Pinceladas[cual], posX, posY);
   }
 
-  /* VELOCIDAD USANDO SONIDO:
-   
-   if (frameCount%int(map(gestorPitch.filtradoNorm(), 0, 1, 40, 2))==0) {
-   image(Pinceladas[cual], posX, posY); 
-   println(gestorPitch.filtradoNorm());
-   }
-   */
+
   popMatrix();
 
-  //en cada fotograma hay que actualizar
-  gestorAmp.actualizar( amp );
-  gestorPitch.actualizar( pitch );
 
-  if (monitor) {
-    gestorAmp.imprimir( 150, 150 );
-    gestorPitch.imprimir( 150, 350, 500, 100, false, true);
-  }
+  capa1.endDraw();
 }
 
 void oscEvent( OscMessage m) { //Función para monitoriar sonido
